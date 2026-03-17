@@ -1,3 +1,12 @@
+---
+title: AI Application
+emoji: 🏠
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+python_version: 3.10
+---
+
 # Apartment Rent Prediction – Canton of Zurich
 
 ## Project Overview
