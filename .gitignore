@@ -16,3 +16,6 @@ model.pkl
 .DS_Store
 Thumbs.db
 .vscode/
+
+# ignore model training
+train.py
