@@ -1,20 +1,45 @@
 import pickle
 import pandas as pd
+import numpy as np
 
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor, HistGradientBoostingRegressor
 from sklearn.model_selection import KFold, cross_validate
 
-DATA_FILE = "data/original_apartment_data_analytics_hs24.csv"
+DATA_FILE = "data/original_apartment_data_analytics_hs24_with_lat_lon.csv"
 MODEL_FILE = "model.pkl"
 
-FEATURES = ["rooms", "area", "pop", "pop_dens", "frg_pct", "emp", "tax_income"]
+FEATURES = ["rooms", "area", "pop", "pop_dens", "frg_pct", "emp", "tax_income", "distance_to_center_km"]
 TARGET = "price"
 
+ZURICH_CENTER_LAT = 47.3780
+ZURICH_CENTER_LON = 8.5402
+
+def haversine_km(lat1, lon1, lat2, lon2):
+    r = 6371.0
+
+    lat1 = np.radians(lat1)
+    lon1 = np.radians(lon1)
+    lat2 = np.radians(lat2)
+    lon2 = np.radians(lon2)
+
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    a = np.sin(dlat / 2) ** 2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2) ** 2
+    c = 2 * np.arcsin(np.sqrt(a))
+
+    return r * c
 
 def load_data():
     df = pd.read_csv(DATA_FILE)
     df = df.dropna().drop_duplicates()
+    df["distance_to_center_km"] = haversine_km(
+        df["lat"],
+        df["lon"],
+        ZURICH_CENTER_LAT,
+        ZURICH_CENTER_LON,
+    )
     return df
 
 
