@@ -4,7 +4,11 @@ emoji: 🏠
 colorFrom: blue
 colorTo: indigo
 sdk: gradio
+sdk_version: 6.9.0
+app_file: app.py
 python_version: 3.10
+pinned: false
+short_description: Apartment rent prediction app for the canton of Zurich
 ---
 
 # Apartment Rent Prediction – Canton of Zurich
